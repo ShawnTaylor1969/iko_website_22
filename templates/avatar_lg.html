@@ -1,0 +1,9 @@
+{% if record.picture %}
+<div class="col col-lg-3" style="margin-left: 10px;">
+  <a href="#"><img class="circular--square-lg" style="padding-left: 3px;" src="{{ record.profile_picture.url }}" width="40" height="40"></a>
+</div>
+{% else %}
+<div class="avatar-circle-lg" style="margin-left: 10px;">
+  <span class='initials-lg'>{{ record.user.first_name|capfirst|slice:"1" }}{{ record.user.last_name|capfirst|slice:"1" }}</span>
+</div>
+{% endif %}

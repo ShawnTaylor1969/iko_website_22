@@ -1,0 +1,28 @@
+.wrapper {
+  display: grid;
+  height: 100%;
+  grid-template-rows: 65px 48px auto;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-areas:
+      "h h h h h h h h h h h h"
+      "m m m m m m m m m m m m"
+      "c c c c c c c c c c c c";
+}
+
+.content-menu {
+  grid-area: m;
+  align-items: center;
+  background-color: var(--main-background-color);
+}
+
+/* Header flexbox */
+.content-menu {
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+}
+
+.content-menu > div {
+  display: flex;
+  width: 1fr;
+}

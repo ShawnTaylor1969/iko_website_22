@@ -1,0 +1,77 @@
+{% extends 'base_left_sidebar.html' %}
+{% load render_table from django_tables2 %}
+{% load bootstrap4 %}
+
+{% block jquery_block %}
+## include 'osc_socialcontent/social_buttons_handlers.js' ##
+{% endblock %}
+
+{% block document_ready_block %}
+$("#modal-div-lg").on("submit", ".js-form-modal-lg", saveForm);
+$("#modal-div-lg").on("close", ".js-form-modal-lg", closeForm);
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+{% endblock %}
+
+{% block end_body_block %}
+<div class="modal fade" id="modal-div-lg">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block left_sidebar_block %}
+{% load space_tags %}
+{% left_sidebar_spacelinks request.user space.slug %}
+{% endblock %}
+
+{% block content_block %}
+<div class="explore-wrapper-right-sidebar">
+
+  <div class="explore-breadcrumb">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{space.title}}</li>
+      </ol>
+    </nav>
+
+  </div>
+
+  <div class="explore-content">
+    <div class="jumbotron p-2 m-0 mb-2">
+      <h1 class="display-6">{{ space.title }}</h1>
+    </div>
+    <div class="card" shadow-lg border>
+      <h5 class="card-header">Wall</h5>
+      <div class="card-body">
+        <style>
+          a {color: #000000;}
+          a:hover {color: #000000;}
+          .table td {vertical-align: middle;}
+        </style>
+        <!-- BUTTON TO TRIGGER THE ACTION -->
+        <div class="mb-1">
+          <form type="submit" action="{% url 'web_walls:list' space.pk %}">
+            <div class="row">
+              <div class="col col-sm-5" style="display: flex; flex-direction: row">
+                <button type="button" onclick="loadForm('{% url 'web_walls:create' space.pk %}', 'lg')" class="btn btn-primary">
+                  <img src="/static/img/plus_white.svg" style="fill: white;" alt="" width="18" height="18" title="New">
+                  New post
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        {% render_table table %}
+      </div>
+    </div>
+  </div>
+
+  <div class="right-sidebar">
+  </div>
+</div>
+{% endblock %}

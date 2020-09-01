@@ -1,0 +1,27 @@
+{% load event_tags %}
+<div class="row row-cols-{{ cols }}">
+  {% for event in events %}
+  <div class="col pt-0 pb-1"{% if border != 'False' %} style="{{ border }}: 1px solid #e8e9eb;"{% endif %}>
+    <div class="media ml-1 mt-1">
+      <div class="align-self-start mr-3">
+        <div class="calendar">
+            <span class="month">{% get_short_month event.start_dateTime %}</span>
+            <span class="day">{% get_short_day event.start_dateTime %}</span>
+        </div>
+      </div>
+      <div class="media-body ml-2">
+        <div class="row justify-content-begin">
+          <!-- <div id="content_link_{{ content.pk }}" class="col-12 pr-4 content-select" data_href="{{ content.get_absolute_url }}" style="min-height:{{ media_body_min_height }}px;"> -->
+            <div class="row">
+              <div class="col">
+                <h6 class="mt-1">{{ event.title|upper }}</h6>
+                <h6 class="mt-1">Location: {{ event.location }}</h6>
+              </div>
+            </div>
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>

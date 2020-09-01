@@ -1,0 +1,45 @@
+.table td {
+  padding: 10px 0 10px 0 !important;
+  vertical-align: middle !important;
+  align-content: center;
+}
+
+.table th {
+  padding: 10px 0 10px 0 !important;
+}
+
+.article-metabar {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    margin: 20px 0 23px 0px;
+}
+
+.article-metabar-item {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 14px;
+    margin: 6px 0 5px;
+    padding: 2px 10px;
+    position: relative;
+}
+
+.article-metabar-time.nobyline {
+    border: 0;
+}
+
+.article-metabar-time {
+    border-left: 1px solid #e1e1e1;
+    color: #999;
+    font-weight: 400;
+}
+
+.article-metabar-item {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 14px;
+    margin: 6px 0 5px;
+    padding: 2px 10px;
+    position: relative;
+}

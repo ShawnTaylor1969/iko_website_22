@@ -1,0 +1,32 @@
+<div class="ui vertical steps shadow-lg border">
+  <div class="{% if user.is_authenticated %}completed{% else %}active{% endif %} step">
+    <div class="content">
+      <div class="title">Sign up</div>
+      <div class="description">Establish your membership user name and password along with other relevant sign up information</div>
+    </div>
+  </div>
+  <div class="{% if not user.is_authenticated %}disabled{% else %}{% if user.membershipProfile.activated %}completed{% else %}active{% endif%}{% endif %} step">
+    <div class="content">
+      <div class="title">Site Approval</div>
+      <div class="description">Wait for the Soronian webmaster to authorize your access to the Soronian website.</div>
+    </div>
+  </div>
+  <div class="{% if not user.is_authenticated or not user.membershipProfile.activated %}disabled{% else %}{% if user.membershipProfile.acceptable_use_policy %}completed{% else %}active{% endif%}{% endif %} step">
+    <div class="content">
+      <div class="title">Acceptable Use Policy & Condentiality</div>
+      <div class="description">Review the Acceptable Use and Condentiality policies.</div>
+    </div>
+  </div>
+  <div class="{% if not user.is_authenticated  or not user.membershipProfile.activated or not user.membershipProfile.acceptable_use_policy %}disabled{% else %}{% if user.membershipProfile.profileUpdated %}completed{% else %}active{% endif%}{% endif %} step">
+    <div class="content">
+      <div class="title">Member profile</div>
+      <div class="description">Tell us more about yourself as you update and complete your membership profile.</div>
+    </div>
+  </div>
+  <div class="disabled step">
+    <div class="content">
+      <div class="title">Welcome!</div>
+      <div class="description">Welcome to the Soronian website.</div>
+    </div>
+  </div>
+</div>

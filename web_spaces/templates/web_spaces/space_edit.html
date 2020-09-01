@@ -1,0 +1,173 @@
+{% extends 'base_left_sidebar.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block document_ready_block %}
+$('#id_layout').change(function(){
+  if ($(this).val() == 'CUSTOM_URL'){
+    $('#div_id_url').show();
+    $('#id_url').focus();
+  }else{
+    $('#id_url').val('');
+    $('#div_id_url').hide();
+  }
+}).trigger('change');
+
+$('#id_admin_method').change(function(){
+  if ($(this).val() == 'POSITION'){
+    $('#div_id_admin_position').show();
+    $('#div_id_admin_user').hide();
+  }
+  if ($(this).val() == 'USER'){
+    $('#div_id_admin_position').hide();
+    $('#div_id_admin_user').show();
+  }
+  if ($(this).val() == 'WEBADMIN'){
+    $('#div_id_admin_position').hide();
+    $('#div_id_admin_user').hide();
+  }
+}).trigger('change');
+
+$('#id_private_access,#id_restricted_access').change(function(){
+  if ($(this)[0].id == "id_private_access") {
+    if ($(this).is(':checked')){
+      $('#id_restricted_access').prop("checked", false);
+      $('#div_id_restricted_to_positions').hide();
+      $('#div_id_restricted_to_groups').hide();
+    }
+  }
+  else {
+    if ($(this).is(':checked')){
+      $('#id_private_access').prop("checked", false);
+      $('#div_id_restricted_to_positions').show();
+      $('#div_id_restricted_to_groups').show();
+    }
+    else {
+      $('#div_id_restricted_to_positions').hide();
+      $('#div_id_restricted_to_groups').hide();
+    }
+  }
+}).trigger('change');
+
+{% endblock %}
+
+{% block left_sidebar_block %}
+{% load space_tags %}
+{% left_sidebar_spacelinks request.user 'site-administration' %}
+{% endblock %}
+
+{% block content_block %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'web_spaces:list' %}">Spaces</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ space_form.instance.title }}</li>
+    <li class="breadcrumb-item active" aria-current="page">Edit</li>
+  </ol>
+</nav>
+
+<div class="container-fluid mb-5">
+
+
+{% if space_form.non_field_errors %}
+  <div class="mt-2">
+    {% for error in space_form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<form id="form_1" class="form-top" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <div class="container-fluid mt-3">
+    <div class="row row-cols-2 mt-3">
+      <div class="col-9">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h5 class="my-0 font-weight-normal">Space</h5>
+          </div>
+          <div class="card-body">
+            {{ space_form.title|as_crispy_field }}
+            {{ space_form.summary|as_crispy_field }}
+            {{ space_form.body|as_crispy_field }}
+          </div>
+        </div>
+
+        <div class="row row-cols-3">
+          <div class="col-6">
+            <div class="card mb-4 shadow-sm">
+              <div class="card-header">
+                <h5 class="my-0 font-weight-normal">Administration Options</h5>
+              </div>
+              <div class="card-body">
+                {{ space_form.status|as_crispy_field }}
+                {{ space_form.admin_method|as_crispy_field }}
+                {{ space_form.admin_position|as_crispy_field }}
+                {{ space_form.admin_user|as_crispy_field }}
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <!-- Publication section -->
+            <div class="card mb-4 shadow-sm">
+              <div class="card-header">
+                <h5 class="my-0 font-weight-normal">Access Options</h5>
+              </div>
+              <div class="card-body">
+                {{ space_form.public_access|as_crispy_field }}
+                {{ space_form.private_access|as_crispy_field }}
+                {{ space_form.restricted_access|as_crispy_field }}
+                {{ space_form.restricted_to_positions|as_crispy_field }}
+                {{ space_form.restricted_to_groups|as_crispy_field }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <input type="submit" formnovalidate class="btn btn-primary" value="Save">
+        <a class="btn btn-primary" href="{% url 'web_spaces:list' %}">Cancel</a>
+      </div>
+      <div class="col-3">
+        <!-- Content image upload -->
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h5 class="my-0 font-weight-normal">Featured Picture</h5>
+          </div>
+          {% if space_form.image.url %}
+          <img src="{{ space_form.image.url }}" alt="">
+          {% endif %}
+          <div class="card-body">
+            {{ space_form.image|as_crispy_field }}
+          </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h5 class="my-0 font-weight-normal">Layout Options</h5>
+          </div>
+          <div class="card-body">
+            {{ space_form.type|as_crispy_field }}
+            {{ space_form.show_space_menu|as_crispy_field }}
+            {{ space_form.show_application_menu|as_crispy_field }}
+            {{ space_form.layout|as_crispy_field }}
+            {{ space_form.url|as_crispy_field }}
+          </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h5 class="my-0 font-weight-normal">Types of Content</h5>
+          </div>
+          <div class="card-body">
+            {{ space_form.content_types|as_crispy_field }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+{% endblock %}

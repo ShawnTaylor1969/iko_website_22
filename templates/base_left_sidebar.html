@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% load static %}
+{% load configuration_tags %}
+<html lang="en" dir="ltr">
+  <head>
+    {% include 'head.html' %}
+    <script type="text/javascript">
+      {% getConfiguration as configuration %}
+      document.documentElement.style.setProperty('--main-background-color', "{{ configuration.main_background_color }}")
+      document.documentElement.style.setProperty('--primary-color', "{{ configuration.primary_color }}")
+      document.documentElement.style.setProperty('--primary-light-color', "{{ configuration.primary_light_color }}cc")
+      document.documentElement.style.setProperty('--secondard-color', "{{ configuration.secondary_color }}")
+      document.documentElement.style.setProperty('--secondary-light-color', "{{ configuration.secondary_light_color }}")
+      document.documentElement.style.setProperty('--primary', "{{ configuration.primary_color }}")
+      document.documentElement.style.setProperty('--secondary', "{{ configuration.secondary_color }}")
+      $(':root').css("--header-background-img", "url('{{ configuration.header_background_img }}')");
+    </script>
+    <link rel="stylesheet" href="{% static "css/base_left_sidebar.css" %}">
+    {% block additional_script_and_link_block %}
+    {% endblock %}
+    {% block header_block %}
+    {% endblock %}
+    {% block title_block %}
+    {% endblock %}
+  </head>
+  <script type="text/javascript">
+    $( document ).ready(
+      function() {
+        {% block document_ready_block %}
+        {% endblock %}
+      }
+    );
+  </script>
+  <body>
+    <div class="wrapper">
+      {% include 'top_nav.html' %}
+      <div class="left-sidebar">
+        {% block left_sidebar_block %}
+        {% endblock %}
+      </div>
+      <div class="content" id="osc_content">
+        {% block content_block %}
+        {% endblock %}
+      </div>
+      <!-- Other css-gridareas -->
+      {% block other_gridarea_block %}
+      {% endblock %}
+    </div>
+
+    <!-- Place html tags or other tags here that appear at the bottom of the body_block
+    of the webpage -->
+    {% block end_body_block %}
+    {% endblock %}
+
+    <!-- Place jquery stuff that needs to exist at the bottom of the body of the
+    webpage -->
+    {% block jquery_block %}
+    {% endblock %}
+  </body>
+</html>

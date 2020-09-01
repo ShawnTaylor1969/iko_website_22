@@ -1,0 +1,55 @@
+<div class="row  align-items-center">
+  <div class="col-1 mt-0">
+    {% if record.created_by.member.picture.url %}
+      <img class="circular--square-sm" src="{{record.created_by.member.picture.url }}" width="40px" height="40px">
+    {% else %}
+      <div class='avatar-circle-sm'>
+        <span class='initials-sm'>{{ record.created_by.first_name|capfirst|slice:"1" }}{{ record.created_by.last_name|capfirst|slice:"1" }}</span>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="col-11 mt-0">
+    <div class="row">
+      <div class="col-9">
+        <h6>{{ record.created_by }} posted {{record.title}} ({{ record.created_dateTime|timesince}} ago)</h6>
+      </div>
+      <div class="col-3" style="text-align: right;">
+         {{ record.created_dateTime }}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="media mt-2">
+  <a href="{{ record.content.get_read_url }}">
+    {% if record.picture %}
+    <img src="{{ record.picture.url }}" width="128" height="128">
+    {% else %}
+    <img src="/static/img/image.svg" width="128" height="128">
+    {% endif %}
+  </a>
+  <div class="media-body ml-2 pl-2 content-link">
+    <div class="row row-cols-2">
+      <div class="col-11">
+        <a class="content-link" href="#">
+          <div>
+              <strong>{{record.title }}</strong>
+              <p style="max-height: 90px;overflow: hidden;">{{ record.message|safe }}
+          </div>
+        </a>
+      </div>
+      <div class="col-1">
+        <div class="dropdown dropleft text-center" style="border-top: 0px; border-right: 0px; border-bottom: 0px;">
+          <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="/static/img/three_dots.svg" alt="Options">
+          </a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="width: 240px;">
+            <a class="dropdown-item" href="javascript:loadForm('/wall/{{record.pk}}/delete', 'lg');">Delete</a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    {{record.summary}}
+  </div>
+</div>

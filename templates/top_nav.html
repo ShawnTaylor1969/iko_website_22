@@ -1,0 +1,72 @@
+{% load configuration_tags %}
+{% load spacelinks_tags %}
+{% load member_tags %}
+
+<div class="header">
+  <div>
+    <a class="navbar-brand greek-font ml-3" style="padding-top: 0px;" href="{% url 'home' %}">
+      {% getConfiguration as configuration %}
+      <img src="{{ configuration.brand_logo_img }}" width="36px" height="36px" alt="">
+    </a>
+    {% get_spacelinks 'home-page' 'home-page-website-navigator-top-left' as nav_items %}
+    {% for nav_item in nav_items %}
+      <div>
+        <a href="{% if nav_item.type == "URL" %}{{ nav_item.url }}{% else %}#" onclick="javascript.void(0);{% endif %}" class="nav-link top-right-menu white-color">
+          {{ nav_item.title }}
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div>
+    {% if user.is_authenticated %}
+    {% get_member user as member %}
+    <div class="nav-item">
+      {% if member.picture %}
+      <div class="col col-sm-3" style="margin-left: 10px;">
+        <a href="#"><img class="circular--square-sm" style="padding-left: 3px;" src="{{ member.picture.url }}" width="40" height="40"></a>
+      </div>
+      {% else %}
+      <div class="avatar-circle-sm" style="margin-left: 10px;">
+        <span class='initials-sm'>{{ user.first_name|capfirst|slice:"1" }}{{ user.last_name|capfirst|slice:"1" }}</span>
+      </div>
+      {% endif %}
+    </div>
+    <div class="nav-item dropdown dropleft">
+      <a class="nav-link dropdown-toggle white-color" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{ user.first_name }}
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navitem-{{ treeItem.id }}">
+        {% get_user_links 'home-page-website-navigator-my-options' request.user as nav_items %}
+        {% for nav_item in nav_items %}
+        {% if nav_item.type == 'GROUP_HEADER' %}
+          <h6 class="dropdown-header">{{ nav_item.title }}</h6>
+        {% endif %}
+        {% if nav_item.type == 'SPACER' %}
+          <div class="dropdown-divider"></div>
+        {% endif %}
+        {% if nav_item.type == 'URL' %}
+          <a href="{% if nav_item.url|length > 0 %}{{ nav_item.url|replace_user_pk:user.pk }}{% else %}javascript.void(0);{% endif %}" class="dropdown-item">{{ nav_item.title }}</a>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    {% else %}
+      {% get_spacelinks 'home-page' 'home-page-website-navigator-loginsignup' as nav_items %}
+      {% for nav_item in nav_items %}
+        <div>
+          <a href="{% if nav_item.type == "URL" %}{{ nav_item.url }}{% else %}#" onclick="javascript.void(0);{% endif %}" class="nav-link top-right-menu white-color">
+            {{ nav_item.title }}
+          </a>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <div>
+
+  </div>
+
+  <div>
+  </div>
+</div>

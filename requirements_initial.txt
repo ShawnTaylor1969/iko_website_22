@@ -1,6 +1,10 @@
+pillow
+cookiecutter
+
 django_tables2
 django-crispy-forms
-bootstrap4
+django-bootstrap4
+django-colorful
 django-colorfield
 django-phone-field
 django-countries

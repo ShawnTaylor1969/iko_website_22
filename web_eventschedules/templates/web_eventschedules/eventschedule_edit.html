@@ -1,0 +1,309 @@
+{% extends 'base_left_sidebar.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block document_ready_block %}
+$('#id_public_body_same_as').change(function(){
+  if ($(this).is(':checked')){
+    $('#div_id_public_body').hide();
+  }
+  else {
+    $('#div_id_public_body').show();
+  }
+}).trigger('change');
+
+$('#id_independent_body_same_as').change(function(){
+  if ($(this).is(':checked')){
+    $('#div_id_independent_body').hide();
+  }
+  else {
+    $('#div_id_independent_body').show();
+  }
+}).trigger('change');
+
+$('#id_active_body_same_as').change(function(){
+  if ($(this).is(':checked')){
+    $('#div_id_active_body').hide();
+  }
+  else {
+    $('#div_id_active_body').show();
+  }
+}).trigger('change');
+
+$('#id_alumni_body_same_as').change(function(){
+  if ($(this).is(':checked')){
+    $('#div_id_alumni_body').hide();
+  }
+  else {
+    $('#div_id_alumni_body').show();
+  }
+}).trigger('change');
+
+$('#id_frequency').change(function(){
+  if ($(this).val() == 'ONCE'){
+    $('#div_id_repeat_every_n_days').hide();
+    $('#div_id_weekly_frequency').hide();
+    $('#div_id_repeat_every_n_weeks').hide();
+    $('#div_id_repeat_week_of_month').hide();
+    $('#div_id_repeat_on_Mon').hide();
+    $('#div_id_repeat_on_Tue').hide();
+    $('#div_id_repeat_on_Wed').hide();
+    $('#div_id_repeat_on_Thu').hide();
+    $('#div_id_repeat_on_Fri').hide();
+    $('#div_id_repeat_on_Sat').hide();
+    $('#div_id_repeat_on_Sun').hide();
+    $('#div_id_repeat_last_day_of_month').hide();
+    $('#div_id_repeat_day_of_the_month').hide();
+    $('#div_id_repeat_every_n_years').hide();
+    $('#div_id_end_series').hide();
+    $('#div_id_series_occurrences').hide();
+  }
+  if ($(this).val() == 'DAILY'){
+    $('#div_id_repeat_every_n_days').show();
+    $('#div_id_weekly_frequency').hide();
+    $('#div_id_repeat_every_n_weeks').hide();
+    $('#div_id_repeat_week_of_month').hide();
+    $('#div_id_repeat_on_Mon').hide();
+    $('#div_id_repeat_on_Tue').hide();
+    $('#div_id_repeat_on_Wed').hide();
+    $('#div_id_repeat_on_Thu').hide();
+    $('#div_id_repeat_on_Fri').hide();
+    $('#div_id_repeat_on_Sat').hide();
+    $('#div_id_repeat_on_Sun').hide();
+    $('#div_id_repeat_last_day_of_month').hide();
+    $('#div_id_repeat_day_of_the_month').hide();
+    $('#div_id_repeat_every_n_years').hide();
+    $('#div_id_end_series').hide();
+    $('#div_id_series_occurrences').hide();
+  }
+  if ($(this).val() == 'WEEKLY'){
+    $('#div_id_repeat_every_n_days').hide();
+    $('#div_id_weekly_frequency').show();
+    $('#div_id_repeat_every_n_weeks').show();
+    $('#div_id_repeat_week_of_month').hide();
+    $('#div_id_repeat_on_Mon').show();
+    $('#div_id_repeat_on_Tue').show();
+    $('#div_id_repeat_on_Wed').show();
+    $('#div_id_repeat_on_Thu').show();
+    $('#div_id_repeat_on_Fri').show();
+    $('#div_id_repeat_on_Sat').show();
+    $('#div_id_repeat_on_Sun').show();
+    $('#div_id_repeat_last_day_of_month').hide();
+    $('#div_id_repeat_day_of_the_month').hide();
+    $('#div_id_repeat_every_n_years').hide();
+    $('#div_id_end_series').hide();
+    $('#div_id_series_occurrences').hide();
+  }
+  if ($(this).val() == 'MONTHLY'){
+    $('#div_id_repeat_every_n_days').hide();
+    $('#div_id_weekly_frequency').hide();
+    $('#div_id_repeat_every_n_weeks').hide();
+    $('#div_id_repeat_week_of_month').hide();
+    $('#div_id_repeat_on_Mon').hide();
+    $('#div_id_repeat_on_Tue').hide();
+    $('#div_id_repeat_on_Wed').hide();
+    $('#div_id_repeat_on_Thu').hide();
+    $('#div_id_repeat_on_Fri').hide();
+    $('#div_id_repeat_on_Sat').hide();
+    $('#div_id_repeat_on_Sun').hide();
+    $('#div_id_repeat_last_day_of_month').show();
+    $('#div_id_repeat_day_of_the_month').show();
+    $('#div_id_repeat_every_n_years').hide();
+    $('#div_id_end_series').hide();
+    $('#div_id_series_occurrences').hide();
+  }
+  if ($(this).val() == 'YEARLY'){
+    $('#div_id_repeat_every_n_days').hide();
+    $('#div_id_weekly_frequency').hide();
+    $('#div_id_repeat_every_n_weeks').hide();
+    $('#div_id_repeat_week_of_month').hide();
+    $('#div_id_repeat_on_Mon').hide();
+    $('#div_id_repeat_on_Tue').hide();
+    $('#div_id_repeat_on_Wed').hide();
+    $('#div_id_repeat_on_Thu').hide();
+    $('#div_id_repeat_on_Fri').hide();
+    $('#div_id_repeat_on_Sat').hide();
+    $('#div_id_repeat_on_Sun').hide();
+    $('#div_id_repeat_last_day_of_month').hide();
+    $('#div_id_repeat_day_of_the_month').hide();
+    $('#div_id_repeat_every_n_years').show();
+    $('#div_id_end_series').hide();
+    $('#div_id_series_occurrences').hide();
+  }
+}).trigger('change');
+
+$('#id_weekly_frequency').change(function(){
+  if ($('#id_frequency').val() == "WEEKLY") {
+    if ($(this).val() == 'EVERYNWEEKS'){
+      $('#div_id_repeat_every_n_weeks').show();
+      $('#div_id_repeat_week_of_month').hide();
+    }
+    else {
+      $('#div_id_repeat_every_n_weeks').hide();
+      $('#div_id_repeat_week_of_month').show();
+    }
+  }
+}).trigger('change');
+
+$('#id_repeat_last_day_of_month').change(function(){
+  if ($('#id_frequency').val() == "MONTHLY") {
+    if ($(this).is(':checked')){
+      $('#div_id_repeat_day_of_the_month').hide();
+    }
+    else {
+      $('#div_id_repeat_day_of_the_month').show();
+    }
+  }
+}).trigger('change');
+{% endblock %}
+
+{% block left_sidebar_block %}
+{% load space_tags %}
+{% left_sidebar_spacelinks request.user space.slug %}
+{% endblock %}
+
+{% block content_block %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'web_eventschedules:list' calendar.pk %}">Scheduled Events</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ eventschedule_form.instance.title }}</li>
+    <li class="breadcrumb-item active" aria-current="page">Edit</li>
+  </ol>
+</nav>
+
+<div class="container-fluid mb-5">
+
+
+{% if eventschedule_form.non_field_errors %}
+  <div class="mt-2">
+    {% for error in eventschedule_form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<form id="form_1" class="form-top" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="container-fluid mt-3">
+    <div class="row row-cols-2 mt-3">
+      <div class="col-9">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h5 class="my-0 font-weight-normal">Event Schedule</h5>
+          </div>
+          <div class="card-body">
+            {{ eventschedule_form.title|as_crispy_field }}
+            <div class="form-row">
+              <div class="form-group col-md-8 mb-0">
+                {{ eventschedule_form.title|as_crispy_field }}
+              </div>
+              <div class="form-group col-md-4 mb-0">
+                {{ eventschedule_form.organizer|as_crispy_field }}
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4 mb-0">
+                {{ eventschedule_form.event_type|as_crispy_field }}
+              </div>
+              <div class="form-group col-md-4 mb-0">
+                {{ eventschedule_form.location|as_crispy_field }}
+              </div>
+              <div class="form-group col-md-4 mb-0">
+                {{ eventschedule_form.frequency|as_crispy_field }}
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4 mb-0">
+                {{ eventschedule_form.start_dateTime|as_crispy_field }}
+              </div>
+              <div class="form-group col-md-4 mb-0">
+                {{ eventschedule_form.end_dateTime|as_crispy_field }}
+              </div>
+              <div class="form-group col-md-4 mb-0">
+                {{ eventschedule_form.all_day_event|as_crispy_field }}
+
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-4 mb-0">
+
+              </div>
+              <div class="form-group col-md-4 mb-0">
+
+              </div>
+              <div class="form-group col-md-4 mb-0">
+
+              </div>
+            </div>
+            {{ eventschedule_form.body|as_crispy_field }}
+            {{ eventschedule_form.public_body_same_as|as_crispy_field }}
+            {{ eventschedule_form.public_body|as_crispy_field }}
+            {{ eventschedule_form.independent_body_same_as|as_crispy_field }}
+            {{ eventschedule_form.independent_body|as_crispy_field }}
+            {{ eventschedule_form.active_body_same_as|as_crispy_field }}
+            {{ eventschedule_form.active_body|as_crispy_field }}
+            {{ eventschedule_form.alumni_body_same_as|as_crispy_field }}
+            {{ eventschedule_form.alumni_body|as_crispy_field }}
+          </div>
+        </div>
+        <input type="submit" formnovalidate class="btn btn-primary" value="Save">
+        <a class="btn btn-primary" href="{% url 'web_eventschedules:list' calendar.pk %}">Cancel</a>
+      </div>
+      <div class="col-3">
+        <!-- Content image upload -->
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h5 class="my-0 font-weight-normal">Featured Picture</h5>
+          </div>
+          {% if eventschedule_form.picture %}
+          <img src="{{ eventschedule_form.picture.url }}" alt="">
+          {% endif %}
+          <div class="card-body">
+            {{ eventschedule_form.picture|as_crispy_field }}
+          </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h5 class="my-0 font-weight-normal">Options</h5>
+          </div>
+          <div class="card-body">
+            {{ eventschedule_form.is_active|as_crispy_field }}
+            {{ eventschedule_form.show_as_busy|as_crispy_field }}
+
+          </div>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h5 class="my-0 font-weight-normal">Repeating Schedule</h5>
+          </div>
+          <div class="card-body">
+            {{ eventschedule_form.repeat_every_n_days|as_crispy_field }}
+            {{ eventschedule_form.weekly_frequency|as_crispy_field }}
+            {{ eventschedule_form.repeat_every_n_weeks|as_crispy_field }}
+            {{ eventschedule_form.repeat_week_of_month|as_crispy_field }}
+            {{ eventschedule_form.repeat_on_Mon|as_crispy_field }}
+            {{ eventschedule_form.repeat_on_Tue|as_crispy_field }}
+            {{ eventschedule_form.repeat_on_Wed|as_crispy_field }}
+            {{ eventschedule_form.repeat_on_Thu|as_crispy_field }}
+            {{ eventschedule_form.repeat_on_Fri|as_crispy_field }}
+            {{ eventschedule_form.repeat_on_Sat|as_crispy_field }}
+            {{ eventschedule_form.repeat_on_Sun|as_crispy_field }}
+            {{ eventschedule_form.repeat_last_day_of_month|as_crispy_field }}
+            {{ eventschedule_form.repeat_day_of_the_month|as_crispy_field }}
+            {{ eventschedule_form.repeat_every_n_years|as_crispy_field }}
+            {{ eventschedule_form.end_series|as_crispy_field }}
+            {{ eventschedule_form.series_occurrences|as_crispy_field }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+{% endblock %}

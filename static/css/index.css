@@ -1,0 +1,93 @@
+.news-wrapper {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 160px 48px auto;
+  grid-template-areas:
+  "a a a a a a a a a a a a"
+  "s s s s s s s s s c c c"
+  "b b b b b b b b b c c c";
+  overflow: hidden;
+  height: 100%;
+}
+
+.html .body {
+  height:100%;
+  overflow: hidden;
+}
+
+.news-col {
+  border: 1px solid #DADCE0;
+  padding: 8px;
+  overflow: hidden;
+}
+
+.news-banner {
+  grid-area: a;
+  overflow: hidden;
+}
+
+.news-sections-banner {
+  grid-area: s;
+  background-color: var(--primary-color);
+  overflow: hidden;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.news-sections-banner > a {
+  color: white;
+}
+
+.news-col-b {
+  grid-area: b;
+}
+
+.news-col-c {
+  grid-area: c;
+}
+
+.news-col-d {
+  grid-area: d;
+  overflow-y: scroll
+}
+
+.news-col-e {
+  grid-area: e;
+  overflow: hidden;
+}
+
+.news-col-f {
+  grid-area: f;
+  overflow-y: scroll;
+}
+
+.news-col-g {
+  grid-area: g;
+  overflow-y: scroll;
+}
+
+.news-col-h {
+  grid-area: h;
+}
+
+.news-banner {
+  display: grid;
+  background-color: var(--secondary-light-color);
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  grid-template-rows: 80px 80px;
+  min-height: 160px;
+  max-height: 160px;
+}
+.media-list {
+  max-height: 110px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.media-dual {
+  max-height: 240px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}

@@ -1,0 +1,17 @@
+<div class="media pb-1 pt-1" style="border-bottom: 1px solid #DADCE0;">
+  <a class="no-text-decoration" href="#">
+    {% if record.picture %}
+    <div class="col pl-2 pr-0">
+      <img class="circular--square-md" src="{{ record.picture.url }}" width="60" height="60">
+    </div>
+    {% else %}
+    <div class="avatar-circle-md" style="margin-left: 10px;">
+      <span class='initials-md'>{{ record.user.first_name|capfirst|slice:"1" }}{{ record.user.last_name|capfirst|slice:"1" }}</span>
+    </div>
+    {% endif %}
+  </a>
+  <div class="media-body pl-2">
+    <h6 class="mt-0">{{ record.user.first_name}} {{ record.user.last_name }}</h6>
+    <small><p style='margin-bottom: 0px'>{{ record.birth_date|date:"F jS" }}</p></small>
+  </div>
+</div>

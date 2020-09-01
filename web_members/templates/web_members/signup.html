@@ -1,0 +1,132 @@
+{% extends "base_auth.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load configuration_tags %}
+
+{% block document_ready_block %}
+$("#id_birth_date_month").css('width', '45%');
+$("#id_birth_date_day").css('width', '25%');
+$("#id_birth_date_year").css('width', '30%');
+{% endblock %}
+
+{% block jquery_block %}
+<script type="text/javascript">
+
+</script>
+{% endblock %}
+
+{% block additional_script_and_link_block %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.13/combined/js/gijgo.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.13/combined/css/gijgo.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+  {% getConfiguration as configuration %}
+  <style type="text/css">
+    .content {
+      color: white;
+      background: url('{{ configuration.sign_up_img }}') no-repeat;
+      background-size: cover;
+    }
+    .form-control {
+      background-color: white;
+      border: none;
+      outline:none;
+      color: black;
+      border-radius: 0px;
+    }
+  </style>
+{% endblock %}
+
+{% block content_block %}
+
+<div style="margin-top: 10px;">
+  {% if signed_up %}
+    {{ configuration.successful_sign_up_msg }}
+  {% else %}
+    <div class="row justify-content-center">
+      <div class="col-7">
+        <div class="card shadow-lg border form_transparent">
+          <div class="card-body">
+            {% if not registered %}
+            <h1>Sign Up</h1>
+            {% if user_form.non_field_errors or member_form.non_field_errors  %}
+              <div class="mt-2">
+                {% for error in user_form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+                {% for error in member_form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% load crispy_forms_tags %}
+                <div style="padding-top: 10px;">
+                  <div class="form-row">
+                    <div class="form-group col-md-12 mb-0">
+                      {{ member_form.type|as_crispy_field }}
+                    </div>
+                  </div>
+                  <h5>Login Information:</h5>
+                  <div class="form-row">
+                    <div class="form-group col-md-6 mb-0">
+                      {{ user_form.username|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6 mb-0">
+                      {{ user_form.email|as_crispy_field }}
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6 mb-0">
+                      {{ user_form.first_name|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6 mb-0">
+                      {{ user_form.last_name|as_crispy_field }}
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6 mb-0">
+                      {{ user_form.password1|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-6 mb-0">
+                      {{ user_form.password2|as_crispy_field }}
+                    </div>
+                  </div>
+                </div>
+                <div id="member-info" style="padding-top: 10px;">
+                  <h5>Member Information:</h5>
+                  <div class="form-row">
+                    <div class="form-group col-md-4 mb-0">
+                      {{ member_form.pledgeClass|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-4 mb-0">
+                      {{ member_form.graduationYear|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-4 mb-0">
+                      {{ member_form.birth_date|as_crispy_field }}
+                    </div>
+                  </div>
+                </div>
+                <input class="btn btn-primary" type="submit" class="btn btn-primary" value="Sign Up">
+                <a class="btn btn-primary" href="{% url 'home' %}">Cancel</a>
+            </form>
+            {% else %}
+              <h1>Sign Up</h1>
+              {% getConfiguration as configuration %}
+              {{ configuration.successful_sign_up_msg | safe }}
+              <a class="btn btn-primary" href="{% url 'log_in' %}" style="margin-top: 15px;">Continue</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+{% endblock %}

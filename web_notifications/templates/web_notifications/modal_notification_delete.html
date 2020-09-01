@@ -1,0 +1,16 @@
+<form method="post" action="{{ action_url }}" class="js-form-modal-lg">
+  {% csrf_token %}
+  <div class="modal-header">
+    <h4 class="modal-title">Confirm notification removal</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p class="lead">Are you sure you want to remove this notification?</p>
+    {{ notification.message }}
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary">Remove notification</button>
+  </div>
+</form>

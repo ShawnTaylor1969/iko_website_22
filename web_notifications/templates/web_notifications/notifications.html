@@ -1,0 +1,120 @@
+{% extends "base_left_sidebar.html" %}
+{% load static %}
+
+{% block additional_script_and_link_block %}
+<link rel="stylesheet" href="{% static "osc_socialcontent/css/master.css" %}">
+{% endblock %}
+{% block document_ready_block %}
+$("#modal-div-lg").on("submit", ".js-form-modal-lg", saveForm);
+$("#modal-div-lg").on("close", ".js-form-modal-lg", closeForm);
+initializeOptArray("notification_list", "/content/notifications")
+{% for notification in notifications %}
+updateOptArray('notification_list', {{ notification.pk }}, false)
+{% endfor %}
+{% endblock %}
+
+{% block end_body_block %}
+<div class="modal fade" id="modal-div-lg">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block left_sidebar_block %}
+{% load space_tags %}
+{% left_sidebar_space_menu request.user 'home-page' %}
+{% endblock %}
+
+{% block content_block %}
+<div class="explore-wrapper">
+
+  <div class="explore-menu">
+
+  </div>
+
+  <div class="explore-content">
+    <div class="my-3 p-3 bg-white rounded shadow-sm">
+      <div class="row border-bottom border-gray pb-2 mb-0">
+        <div class="col-6">
+          <h4>Notifications</h4>
+        </div>
+        {% if notifications.count > 0 %}
+        <div class="col-6 text-right">
+          <a class="btn btn-secondary btn-sm" onclick="checkOrUncheckAll('notification_list', true); return false;" href="#">Select all</a>
+          <a class="btn btn-secondary btn-sm" onclick="checkOrUncheckAll('notification_list', false); return false;" href="#">Unselect all</a>
+          <a class="btn btn-secondary btn-sm" onclick="processOptArray('notification_list', 'delete', true); return false;" href="#">Remove</a>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="my-3 p-3 bg-white rounded shadow-sm">
+        {% if notifications.count > 0 %}
+        {% for notification in notifications %}
+          <div class="row">
+            <div class="col-11">
+              <div class="media">
+                {% if notification.source_user.membershipProfile.profile_picture %}
+                  <img class="circular--square-sm" src="{{ notification.source_user.membershipProfile.profile_picture.url }}" width="40px" height="40px">
+                {% else %}
+                  <div class='avatar-circle-sm'>
+                    <span class='initials-sm'>{{ notification.source_user.first_name|capfirst|slice:"1" }}{{ notification.source_user.last_name|capfirst|slice:"1" }}</span>
+                  </div>
+                {% endif %}
+                <div class="media-body" style="padding-left: 5px;">
+                  <strong class="d-block text-gray-dark">{{ notification.message | safe }}</strong>
+                  <small>{{ notification.source_user.first_name }} {{ notification.source_user.last_name|slice:'1' }}.&nbsp;-&nbsp;Received&nbsp;{{ notification.created_dateTime|timesince }}&nbsp;ago.{% if notification.content_url %}&nbsp;&nbsp;&nbsp;<a href="{{ notification.content_url }}">Link to content</a>{% endif %}</small>
+
+                  {% if notification.detail_messages.all.count > 0 %}
+                  <div class="row justify-content-end">
+                    <div class="col-12">
+                      <a data-toggle="collapse" href="#moreMessages_{{ notification.id }}" role="button" aria-expanded="false" aria-controls="moreMessages_{{ notification.id }}">{{ notification.detail_messages.count }} related notifications</a>
+                      <div id="moreMessages_{{ notification.id }}" class="collapse my-3 p-3 bg-white rounded shadow-sm">
+                        <h6>Related notifications</h6>
+                        {% for notice in notification.detail_messages.all %}
+                          <div class="row">
+                            <div class="col-12 mb-2 border-bottom border-gray">
+                            </div>
+                            <div class="col-12">
+                              <div class="media">
+                                {% if notice.source_user.membershipProfile.profile_picture %}
+                                  <img class="circular--square-sm" src="{{ notice.source_user.membershipProfile.profile_picture.url }}" width="60px" height="60px">
+                                {% else %}
+                                  <div class='avatar-circle-sm'>
+                                    <span class='initials-sm'>{{ notice.source_user.first_name|capfirst|slice:"1" }}{{ notice.source_user.last_name|capfirst|slice:"1" }}</span>
+                                  </div>
+                                {% endif %}
+                                <div class="media-body" style="padding-left: 5px;">
+                                  <strong class="d-block text-gray-dark">{{ notice.message }}</strong>
+                                  <small>{{ notice.source_user.first_name }} {{ notice.source_user.last_name|slice:'1' }}&nbsp;-&nbsp;Received&nbsp;{{ notice.created_dateTime|timesince }}&nbsp;ago.</small>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <div class="col-1 mt-4">
+              <input id="opt_{{ notification.pk }}" type="checkbox" onchange="updateOptArray('notification_list', {{ notification.pk }}, this.checked)">
+            </div>
+            <div class="col-12 mb-2 border-bottom border-gray">
+
+            </div>
+          </div>
+        {% endfor %}
+        {% else %}
+          <div class="alert alert-danger" role="alert">
+            There are no notifications at this time.
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

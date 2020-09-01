@@ -1,0 +1,45 @@
+html, body {
+  height:100%;
+  width: 100%;
+}
+
+/* css-GRID Layout */
+.wrapper {
+  display: grid;
+  height: 100%;
+  grid-template-rows: 65px auto;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-areas:
+      "h h h h h h h h h h h h"
+      "c c c c c c c c c c c c";
+}
+
+.header {
+  grid-area: h;
+  background-image: var(--header-background-img);
+  background-repeat: repeat;
+  align-items: center;
+}
+
+.content {
+  grid-area: c;
+}
+
+/* Header flexbox */
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header > div {
+  display: flex;
+  width: 1fr;
+}
+
+.white-color {
+  color: white;
+}
+
+.white-color:hover {
+  color: lightgrey;
+}

@@ -1,0 +1,9 @@
+    {% if user.member.picture %}
+    <div class="col col-sm-3" style="margin-left: 10px;">
+      <a href="#"><img class="circular--square-sm" style="padding-left: 3px;" src="{{ user.member.profile_picture.url }}" width="40" height="40"></a>
+    </div>
+    {% else %}
+    <div class="avatar-circle-sm" style="margin-left: 10px;">
+      <span class='initials-sm'>{{ user.first_name|capfirst|slice:"1" }}{{ user.last_name|capfirst|slice:"1" }}</span>
+    </div>
+    {% endif %}

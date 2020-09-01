@@ -1,0 +1,61 @@
+{% extends "base_auth.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load configuration_tags %}
+
+{% block additional_script_and_link_block %}
+{% getConfiguration as configuration %}
+<style type="text/css">
+  .content {
+    color: white;
+    background: url('{{ configuration.log_in_img }}') no-repeat;
+    background-size: cover;
+  }
+  .form-control {
+    background-color: white;
+    border: none;
+    outline:none;
+    color: black;
+    border-radius: 0px;
+  }
+
+</style>
+{% endblock %}
+
+{% block content_block %}
+  <div style="margin-top: 20px;">
+    <div class="container">
+      {% if signed_up %}
+        <h1>Thank you for signing up!</h1>
+      {% else %}
+        <div class="row justify-content-center">
+          <div class="col-7">
+            <div class="card shadow-lg border form_transparent">
+              <div class="card-body">
+                <h1>Log In</h1>
+                {% if form.non_field_errors %}
+                  <div class="mt-2">
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+                <form method="POST" action={% url 'log_in' %}>
+                    {% csrf_token %}
+                    {{ form.username | as_crispy_field }}
+                    {{ form.password | as_crispy_field }}
+                    <input class="btn btn-primary" type="submit" class="btn btn-primary" value="Log In">
+                    <a class="btn btn-primary" href="{% url 'home' %}">Cancel</a>
+                    <a style="color: var(--primary-color);" href="{% url 'web_authentication:password_reset' %}">Forgot your password?</a>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+{% endblock %}

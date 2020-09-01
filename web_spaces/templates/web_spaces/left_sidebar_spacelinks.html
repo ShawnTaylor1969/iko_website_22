@@ -1,0 +1,69 @@
+{% load space_tags %}
+<div class="app_menu">
+  {% if space.image %}
+  <img src="{{space.image.url}}" alt="{{space.title}}">
+  {% endif %}
+
+  <!-- Show a link to the home page, if the current page is not the home page -->
+  {% if space.slug != 'home-page' %}
+  <div class="app-menu-item">
+    <img src="/static/img/home.svg" width="24px" height="24px">
+    <a href="{% url 'home' %}"">Home</a>
+    <hr>
+  </div>
+  {% endif %}
+
+  {% if space.show_application_menu or space.show_space_menu %}
+  <a class="app-menu-header" href="{% url 'web_spaces:homepage' space.pk %}">{{space.title}}</a>
+  {% endif %}
+
+  <!-- Show the application menu -->
+  {% if space.show_application_menu %}
+    {% if spacelinks.count > 0 %}
+      {% for app_menu_item in spacelinks %}
+      <div class="app-menu-item">
+        {% if app_menu_item.type == 'ANOTHER_SPACE' %}
+            {% if app_menu_item.icon_URL == None %}
+              <img src="/static/img/space.svg" width="24px" height="24px">
+            {% else %}
+              <img src="{{ app_menu_item.icon_URL }}" width="24px" height="24px">
+            {% endif %}
+            <a href="{% url 'web_spaces:homepage' app_menu_item.another_space.pk %}">{{ app_menu_item.title }}</a>
+        {% endif %}
+
+        {% if app_menu_item.type == 'PROGRAM' %}
+          {% if app_menu_item.icon_URL == None %}
+            <img src="/static/img/program.svg" width="24px" height="24px">
+          {% else %}
+            <img src="{{ app_menu_item.icon_URL }}" width="24px" height="24px">
+          {% endif %}
+          <a href="{{app_menu_item.program.url}}"">{{ app_menu_item.title }}</a>
+        {% endif %}
+
+        {% if app_menu_item.type == 'URL' %}
+          {% if app_menu_item.icon_URL == '' %}
+            <img src="/static/img/program.svg" width="24px" height="24px">
+          {% else %}
+            <img src="{{ app_menu_item.icon_URL }}" width="24px" height="24px">
+          {% endif %}
+          <a href="{{app_menu_item.url}}"">{{ app_menu_item.title }}</a>
+        {% endif %}
+
+
+      </div>
+      {% endfor %}
+    {% endif %}
+  {% endif %}
+
+  <!-- Show the content types for this space in the menu -->
+  {% if space.show_space_menu %}
+    {% if space.content_types.count > 0 %}
+      {% for content_type in space.content_types.all %}
+          <div class="app-menu-item">
+            <img src="{{ content_type.icon_URL }}" width="24px" height="24px">
+            <a href="{{ content_type.space_page_URL }}/{{ space.pk }}/list">{{ content_type.title }}</a>
+          </div>
+      {% endfor %}
+    {% endif %}
+  {% endif %}
+</div>

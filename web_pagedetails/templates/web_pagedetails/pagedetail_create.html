@@ -1,0 +1,56 @@
+{% extends 'base_left_sidebar.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block document_ready_block %}
+{% endblock %}
+
+{% block left_sidebar_block %}
+{% load space_tags %}
+{% left_sidebar_spacelinks request.user 'site-administration' %}
+{% endblock %}
+
+{% block content_block %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'web_pagedetails:list' space.pk %}">PageDetails</a></li>
+    <li class="breadcrumb-item active" aria-current="page">New pagedetail</li>
+  </ol>
+</nav>
+
+<div class="container-fluid mb-5">
+
+
+{% if pagedetail_form.non_field_errors %}
+  <div class="mt-2">
+    {% for error in pagedetail_form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+  <form id="form_1" class="form-top" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="container-fluid mt-3">
+      <div class="row row-cols-2 mt-3">
+        <div class="col-12">
+          <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+              <h5 class="my-0 font-weight-normal">PageDetail</h5>
+            </div>
+            <div class="card-body">
+              {{ pagedetail_form.title|as_crispy_field }}
+              {{ pagedetail_form.body|as_crispy_field }}
+            </div>
+          </div>
+          <input type="submit" formnovalidate class="btn btn-primary" value="Save">
+          <a class="btn btn-primary" href="{% url 'web_pagedetails:list' space.pk %}">Cancel</a>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

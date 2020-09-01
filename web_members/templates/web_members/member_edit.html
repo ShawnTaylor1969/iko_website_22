@@ -1,0 +1,146 @@
+{% extends 'base_left_sidebar.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block document_ready_block %}
+{% endblock %}
+
+{% block left_sidebar_block %}
+{% load space_tags %}
+{% left_sidebar_spacelinks request.user 'site-administration' %}
+{% endblock %}
+
+{% block content_block %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'web_members:list' %}">Members</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ member_form.instance.user.first_name }} {{ member_form.instance.user.last_name }}</li>
+    <li class="breadcrumb-item active" aria-current="page">Edit</li>
+  </ol>
+</nav>
+
+<div class="container-fluid mb-5">
+
+
+{% if member_form.non_field_errors %}
+  <div class="mt-2">
+    {% for error in member_form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+  <form id="form_1" class="form-top" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="container-fluid mt-3">
+      <div class="row row-cols-2 mt-3">
+        <div class="col-12">
+          <div class="card mb-4 shadow-sm">
+            <div class="card-header">
+              <h5 class="my-0 font-weight-normal">Member</h5>
+            </div>
+            <div class="card-body">
+              {% if user_form.non_field_errors or member_form.non_field_errors  %}
+                <div class="mt-2">
+                  {% for error in user_form.non_field_errors %}
+                      <div class="alert alert-danger">
+                          <strong>{{ error|escape }}</strong>
+                      </div>
+                  {% endfor %}
+                  {% for error in member_form.non_field_errors %}
+                      <div class="alert alert-danger">
+                          <strong>{{ error|escape }}</strong>
+                      </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+                <div style="padding-top: 10px;">
+                  <div class="form-row">
+                    <div class="col-md-2">
+                      {% if member_form.instance.picture %}
+                      <div class="col col-lg-3" style="margin-left: 10px;">
+                        <a href="#"><img class="circular--square-lg" style="padding-left: 3px;" src="{{ member_form.instance.picture.url }}" width="80" height="80"></a>
+                      </div>
+                      {% else %}
+                      <div class="avatar-circle-lg" style="margin-left: 10px;">
+                        <span class='initials-lg'>{{ user_form.instance.first_name|capfirst|slice:"1" }}{{ user_form.instance.last_name|capfirst|slice:"1" }}</span>
+                      </div>
+                      {% endif %}
+                    </div>
+                    <div class="col-md-10" style="vertical-align: middle;">
+                      <strong><h2>{{ user_form.instance.first_name|capfirst }}&nbsp;{{ user_form.instance.last_name|capfirst }}</h2></strong>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-12 mb-0 mt-3">
+
+                    </div>
+                  </div>
+                  <h5>Login Information:</h5>
+                  <div class="form-row">
+                    <div class="form-group col-md-4 mb-0">
+                      {{ user_form.username|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-4 mb-0">
+                      {{ user_form.first_name|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-4 mb-0">
+                      {{ user_form.last_name|as_crispy_field }}
+                    </div>
+                  </div>
+                </div>
+                <div id="member-info" style="padding-top: 10px;">
+                  <h5>Member Information:</h5>
+                  <div class="form-row">
+                    <div class="form-group col-md-4 mb-0">
+                      {{ member_form.type|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-4 mb-0">
+                      {{ member_form.status|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-4 mb-0">
+                      {{ user_form.email|as_crispy_field }}
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-4 mb-0">
+                      {{ member_form.pledgeClass|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-4 mb-0">
+                      {{ member_form.graduationYear|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-4 mb-0">
+                      {{ member_form.birth_date|as_crispy_field }}
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-4 mb-0">
+                      {{ user_form.is_active|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-4 mb-0">
+                      {{ user_form.is_staff|as_crispy_field }}
+                    </div>
+                    <div class="form-group col-md-4 mb-0">
+                      {{ user_form.is_superuser|as_crispy_field }}
+                    </div>
+                  </div>
+                </div>
+                {{ member_form.about_me|as_crispy_field }}
+                {% if member_form.instance.picture %}
+                  <img src="{{ member_form.instance.picture.url }}" width="250" height="250">
+                {% endif %}
+                {{ member_form.picture|as_crispy_field }}
+            </div>
+          </div>
+          <input type="submit" formnovalidate class="btn btn-primary" value="Save">
+          <a class="btn btn-primary" href="{% url 'web_members:list' %}">Cancel</a>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

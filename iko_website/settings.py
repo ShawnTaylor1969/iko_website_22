@@ -51,6 +51,50 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
+    'api_configurations',
+    'api_spaces',
+    'api_programs',
+    'api_spacelinks',
+    'api_contenttypes',
+
+    'api_users',
+    'api_members',
+    'api_groups',
+    'api_positions',
+    'api_notifications',
+    'api_timelines',
+    'api_walls',
+
+    'api_articles',
+
+    'api_albums',
+    'api_photos',
+
+    'api_pagedetails',
+
+    'api_calendars',
+    'api_eventtypes',
+    'api_eventschedules',
+    'api_events',
+
+    'web_authentication',
+    'web_members',
+    'web_positions',
+    'web_groups',
+
+    'web_spaces',
+    'web_programs',
+    'web_notifications',
+
+    'web_albums',
+    'web_photos',
+    'web_pagedetails',
+
+    'web_calendars',
+    'web_eventtypes',
+    'web_eventschedules',
+
+    'web_walls',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -107,14 +151,7 @@ DATABASES = {
         'PORT': '5432',
 
     },
-
-    'local': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
 }
-
-DATABASE_ROUTERS = ['iko_website.routers.DatabaseRouter',]
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -171,7 +208,7 @@ MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
 
 LOGIN_URL = '/login'
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "home"
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_HOST = 'localhost'
