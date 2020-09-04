@@ -13,7 +13,7 @@
       document.documentElement.style.setProperty('--secondary-light-color', "{{ configuration.secondary_light_color }}")
       document.documentElement.style.setProperty('--primary', "{{ configuration.primary_color }}")
       document.documentElement.style.setProperty('--secondary', "{{ configuration.secondary_color }}")
-      $(':root').css("--header-background-img", "url('{{ configuration.header_background_img }}')");
+      $(':root').css("--header-background-img", "url('{{ configuration.header_background_img.url }}')");
     </script>
     <link rel="stylesheet" href="{% static "css/base_left_sidebar.css" %}">
     {% block additional_script_and_link_block %}

@@ -6,7 +6,7 @@
   <div>
     <a class="navbar-brand greek-font ml-3" style="padding-top: 0px;" href="{% url 'home' %}">
       {% getConfiguration as configuration %}
-      <img src="{{ configuration.brand_logo_img }}" width="36px" height="36px" alt="">
+      <img src="{{ configuration.brand_logo_img.url }}" width="36px" height="36px" alt="">
     </a>
     {% get_spacelinks 'home-page' 'home-page-website-navigator-top-left' as nav_items %}
     {% for nav_item in nav_items %}
